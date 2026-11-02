@@ -43,7 +43,7 @@ function Parse-ProxyLine {
 function Get-ProxyList {
     param([string]$Path)
     if (-not (Test-Path -LiteralPath $Path)) {
-        throw "Missing $Path — copy proxies.example.txt to proxies.txt and add your lines."
+        throw "Missing $Path - create proxies.txt in the same folder as this script (host:port:user:pass per line)."
     }
     Get-Content -LiteralPath $Path | ForEach-Object { Parse-ProxyLine $_ } | Where-Object { $_ }
 }
@@ -161,7 +161,7 @@ Write-Host ("Using proxy [{0}] {1}:{2} user={3}" -f $Index, $entry.Host, $entry.
 
 $r = Test-ProxyEntry -Entry $entry
 if ($r.Ok) {
-    Write-Host "Proxy test OK — exit IP: $($r.Ip)" -ForegroundColor Green
+    Write-Host "Proxy test OK - exit IP: $($r.Ip)" -ForegroundColor Green
 } else {
     Write-Host "Proxy test FAILED: $($r.Error)" -ForegroundColor Yellow
 }
@@ -183,6 +183,6 @@ Next:
   .\cursor-proxy-launch.ps1 -Index $Index -LaunchCursor   # Cursor IDE via proxy env
   .\cursor-proxy-launch.ps1 -TestAll                      # test every line
 
-Tampermonkey does not set proxy — browser must use proxy (this script or VPN).
+Tampermonkey does not set proxy - use this script or VPN for the browser.
 "@ 
 }
